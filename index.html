@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instruworths — Precision Instrument Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f4f0;
+      --gray: #888;
+      --light: #e8e6e0;
+      --accent: #2a2a2a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      mix-blend-mode: normal;
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-link {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--black); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 3rem 5rem;
+      border-right: 0.5px solid var(--light);
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 8vw, 7rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-title span {
+      display: block;
+      color: var(--gray);
+    }
+
+    .hero-sub {
+      margin-top: 2.5rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--gray);
+      max-width: 380px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: var(--black);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+    }
+
+    .btn-ghost {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--light);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--black);
+      border-color: var(--black);
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 8rem 3rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-graphic {
+      width: 260px;
+      height: 260px;
+      border: 0.5px solid var(--light);
+      border-radius: 50%;
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards 0.6s;
+    }
+
+    .hero-graphic::before {
+      content: '';
+      position: absolute;
+      inset: 20px;
+      border: 0.5px solid var(--light);
+      border-radius: 50%;
+    }
+
+    .hero-graphic::after {
+      content: '';
+      position: absolute;
+      inset: 50px;
+      background: var(--black);
+      border-radius: 50%;
+    }
+
+    .graphic-label {
+      position: absolute;
+      bottom: -2rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .hero-stats {
+      margin-top: 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      width: 100%;
+      max-width: 280px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1s;
+    }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 0.3rem;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 0.5px;
+      background: var(--light);
+      margin: 0 3rem;
+    }
+
+    /* TOOLS SECTION */
+    .tools {
+      padding: 6rem 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .section-count {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .tool-card {
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 0.5px solid var(--light);
+      text-decoration: none;
+      color: inherit;
+      transition: padding-left 0.3s ease;
+      cursor: pointer;
+    }
+
+    .tool-card:last-child {
+      border-bottom: 0.5px solid var(--light);
+    }
+
+    .tool-card:hover {
+      padding-left: 1rem;
+    }
+
+    .tool-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: var(--light);
+      letter-spacing: 0.05em;
+    }
+
+    .tool-name {
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .tool-desc {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 0.3rem;
+    }
+
+    .tool-arrow {
+      font-size: 1.2rem;
+      color: var(--light);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .tool-card:hover .tool-arrow {
+      color: var(--black);
+      transform: translateX(4px);
+    }
+
+    .tool-tag {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border: 0.5px solid var(--light);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 0.5rem;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 6rem 3rem;
+      background: var(--black);
+      color: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .contact-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+    }
+
+    .contact-title span { color: var(--gray); }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .contact-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .contact-value {
+      font-size: 1rem;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 0.5px solid #333;
+      padding-bottom: 0.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .contact-value:hover { border-color: var(--gray); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3rem;
+      background: var(--black);
+      border-top: 0.5px solid #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: #444;
+    }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: #444;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 7rem 1.5rem 3rem; border-right: none; border-bottom: 0.5px solid var(--light); }
+      .hero-right { padding: 3rem 1.5rem; }
+      .tools { padding: 4rem 1.5rem; }
+      .contact { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+      .divider { margin: 0 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      .tool-card { grid-template-columns: 40px 1fr auto; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Instruworths</a>
+    <a href="mailto:allen@instruworths.com" class="nav-link">Contact</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Precision Instrument Solutions · Australia</p>
+      <h1 class="hero-title">
+        Instru<span>worths</span>
+      </h1>
+      <p class="hero-sub">
+        Specialising in high-performance instrumentation and flow control solutions for industrial and commercial applications.
+      </p>
+      <div class="hero-cta">
+        <a href="/chemical-resistance-selector/" class="btn-primary">Try Our Tools</a>
+        <a href="mailto:allen@instruworths.com" class="btn-ghost">Get in touch →</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-graphic">
+        <span class="graphic-label">Precision · Reliability</span>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">B2B</div>
+          <div class="stat-label">Focused</div>
+        </div>
+        <div>
+          <div class="stat-num">AU</div>
+          <div class="stat-label">Based</div>
+        </div>
+        <div>
+          <div class="stat-num">24H</div>
+          <div class="stat-label">Response</div>
+        </div>
+        <div>
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Solutions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="tools">
+    <div class="section-header">
+      <h2 class="section-title">Reference Tools</h2>
+      <span class="section-count">01 Available</span>
+    </div>
+
+    <a href="/chemical-resistance-selector/" class="tool-card">
+      <span class="tool-num">01</span>
+      <div>
+        <div class="tool-name">Chemical Resistance Material Selector</div>
+        <div class="tool-desc">Find compatible valve and fitting materials for your chemicals instantly.</div>
+        <span class="tool-tag">Flow Control</span>
+      </div>
+      <span class="tool-arrow">→</span>
+    </a>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="contact">
+    <div>
+      <h2 class="contact-title">Let's Work<br><span>Together</span></h2>
+    </div>
+    <div class="contact-info">
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <a href="mailto:allen@instruworths.com" class="contact-value">allen@instruworths.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Sales Enquiries</span>
+        <a href="mailto:sales@instruworths.com" class="contact-value">sales@instruworths.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Location</span>
+        <span class="contact-value">Australia</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">Instruworths</span>
+    <span class="footer-copy">© 2026 Instruworths. All rights reserved.</span>
+  </footer>
+
+</body>
+</html>
