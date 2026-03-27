@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>化学耐受性查询器 | Instruworths</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans">
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-blue-800 mb-2">化学耐受性查询器</h1>
+            <p class="text-slate-500 text-lg">专业的实验室材料选型参考工具</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8 border border-slate-100">
+            <div class="relative">
+                <input type="text" id="chemSearch" placeholder="搜索化学品名称 (例如: Sulfuric Acid)..." 
+                       class="w-full px-5 py-4 pl-12 bg-slate-100 border-none rounded-xl focus:ring-2 focus:ring-blue-500 transition-all text-lg">
+                <span class="absolute left-4 top-4.5 text-slate-400 text-xl">🔍</span>
+            </div>
+        </div>
+
+        <div id="results" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </div>
+    </div>
+
+    <script>
+        // 示例数据（实际项目中你可以把这个数组扩大，或者放进单独的 data.json）
+        const chemicals = [
+            { name: "Acetone (丙酮)", rating: "D", material: "Viton" },
+            { name: "Acetic Acid (乙酸)", rating: "A", material: "PTFE" },
+            { name: "Sulfuric Acid (98%)", rating: "A", material: "Teflon" },
+            { name: "Sodium Hydroxide (氢氧化钠)", rating: "B", material: "EPDM" },
+            { name: "Nitric Acid (硝酸)", rating: "C", material: "PVC" },
+            { name: "Ethanol (乙醇)", rating: "A", material: "Polypropylene" }
+        ];
+
+        const searchInput = document.getElementById('chemSearch');
+        const resultsDiv = document.getElementById('results');
+
+        function renderResults(filter = "") {
+            resultsDiv.innerHTML = "";
+            const filtered = chemicals.filter(c => 
+                c.name.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filtered.forEach(c => {
+                // 根据评级自动选择颜色
+                const colorMap = {
+                    'A': 'bg-green-100 text-green-700 border-green-200',
+                    'B': 'bg-blue-100 text-blue-700 border-blue-200',
+                    'C': 'bg-yellow-100 text-yellow-700 border-yellow-200',
+                    'D': 'bg-red-100 text-red-700 border-red-200'
+                };
+                const colorClass = colorMap[c.rating] || 'bg-slate-100';
+
+                resultsDiv.innerHTML += `
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-slate-800">${c.name}</h3>
+                            <p class="text-sm text-slate-500">建议材质: ${c.material}</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-lg ${colorClass} flex items-center justify-center font-bold text-xl border">
+                            ${c.rating}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // 监听输入
+        searchInput.addEventListener('input', (e) => renderResults(e.target.value));
+        // 初始渲染
+        renderResults();
+    </script>
+</body>
+</html>
